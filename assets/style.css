@@ -38,6 +38,9 @@ html {
 }
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--ink);
   font-family: "Segoe UI", "Microsoft YaHei", "PingFang SC", -apple-system,
@@ -45,6 +48,9 @@ body {
   font-size: 15px;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+}
+.hero {
+  flex: 0 0 auto;
 }
 a {
   color: var(--accent);
@@ -167,8 +173,10 @@ textarea {
   color: var(--accent);
 }
 main.wrap {
+  width: 100%;
+  flex: 1 0 auto;
   padding-top: 18px;
-  padding-bottom: 70px;
+  padding-bottom: 32px;
 }
 .module {
   padding-top: 2px;
@@ -1022,7 +1030,7 @@ details[open] .chev {
 }
 /* ---- memo workspace: fill viewport, list left / editor right ---- */
 .memo-workspace {
-  height: calc(100vh - 330px);
+  height: calc(100vh - 390px);
   min-height: 520px;
 }
 .memo-sidebar {
@@ -1117,6 +1125,30 @@ details[open] .chev {
   border-color: var(--accent-line);
   background: var(--panel2);
 }
+/* ---- site footer ---- */
+.site-footer {
+  flex: 0 0 auto;
+  margin-top: auto;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.site-footer a {
+  color: var(--accent);
+  font-weight: 600;
+}
+.site-footer a:hover {
+  text-decoration: underline;
+}
 @media print {
   .bookmarks-row {
     display: none !important;
@@ -1125,6 +1157,7 @@ details[open] .chev {
 @media print {
   .hero-actions,
   .tabs,
+  .site-footer,
   .module-toolbar,
   .card-actions,
   .sec-actions,

@@ -377,7 +377,9 @@
       return;
     }
     var top = ws.getBoundingClientRect().top;
-    var h = window.innerHeight - Math.max(0, top) - 18;
+    var footer = document.querySelector(".site-footer");
+    var reserve = (footer ? footer.offsetHeight : 0) + 44;
+    var h = window.innerHeight - Math.max(0, top) - reserve;
     ws.style.height = Math.max(480, h) + "px";
   }
   window.addEventListener("resize", fitMemoWorkspace);
