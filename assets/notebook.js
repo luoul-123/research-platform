@@ -1,10 +1,9 @@
 (function () {
   "use strict";
   var params = new URLSearchParams(location.search);
-  var PRIVATE_MODE = params.get("mode") === "private";
-  var KEY = PRIVATE_MODE ? "reading_tracker_v1" : "research_platform_v1";
+  var KEY = "reading_tracker_v1";
   var SEED = window.SEED || { entries: [], groups: [], metaTasks: [] };
-  var backUrl = PRIVATE_MODE ? "index.html?private=1" : "index.html";
+  var backUrl = "index.html";
   var $ = function (s, r) {
     return (r || document).querySelector(s);
   };

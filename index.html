@@ -286,13 +286,13 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      // 公开默认模式：干净数据，不加载 private 文件。
-      // 私人模式：仅在本机 file:// 或 localhost 下访问 index.html?private=1 时启用。
-      window.PRIVATE_MODE =
-        new URLSearchParams(location.search).get("private") === "1" &&
-        (location.protocol === "file:" ||
-          /^(localhost|127\.0\.0\.1)$/.test(location.hostname));
-      if (window.PRIVATE_MODE) {
+      // 本地打开时自动加载 assets/private 下的本机数据；
+      // 公开部署到 GitHub Pages 时不会请求该目录。
+      // 其他用户本地没有 private 目录时，使用他们自己的 localStorage。
+      if (
+        location.protocol === "file:" ||
+        /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+      ) {
         document.write('<script src="assets/private/state.js"><\/script>');
         document.write('<script src="assets/private/data.js"><\/script>');
       }

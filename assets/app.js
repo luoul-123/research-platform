@@ -1,19 +1,10 @@
 (function () {
   "use strict";
 
-  var PRIVATE_MODE = !!window.PRIVATE_MODE;
-  if (PRIVATE_MODE) {
-    document.body.classList.add("private-mode");
-    var subLine = document.querySelector(".hero .sub");
-    if (subLine) subLine.textContent = "私人模式 · 数据仅存本机，不会上传";
-  }
-  var KEY = PRIVATE_MODE ? "reading_tracker_v1" : "research_platform_v1";
-  var THEME_KEY = PRIVATE_MODE
-    ? "research_workbench_theme_v1"
-    : "research_platform_theme_v1";
-  var TAB_KEY = PRIVATE_MODE
-    ? "research_workbench_tab_v1"
-    : "research_platform_tab_v1";
+  var KEY = "reading_tracker_v1";
+  var LEGACY_KEY = "research_platform_v1";
+  var THEME_KEY = "research_workbench_theme_v1";
+  var TAB_KEY = "research_workbench_tab_v1";
   var SEED = window.SEED || { entries: [] };
 
   var $ = function (s, r) {
@@ -185,7 +176,7 @@
 
   function loadState() {
     try {
-      var raw = localStorage.getItem(KEY);
+      var raw = localStorage.getItem(KEY) || localStorage.getItem(LEGACY_KEY);
       if (raw) {
         var d = JSON.parse(raw);
         if (d && Array.isArray(d.entries)) return normalize(d);
@@ -193,7 +184,6 @@
     } catch (e) {}
     try {
       if (
-        PRIVATE_MODE &&
         window.PRIVATE_STATE &&
         Array.isArray(window.PRIVATE_STATE.entries)
       )
@@ -934,9 +924,7 @@
       left +
       ",top=0,resizable=yes,scrollbars=yes";
     notebookWin = window.open(
-      "notebook.html?id=" +
-        encodeURIComponent(e.id) +
-        (PRIVATE_MODE ? "&mode=private" : ""),
+      "notebook.html?id=" + encodeURIComponent(e.id),
       "rl_notebook",
       features,
     );
