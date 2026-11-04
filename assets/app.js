@@ -181,6 +181,10 @@
         if (d && Array.isArray(d.entries)) return normalize(d);
       }
     } catch (e) {}
+    try {
+      if (window.PRIVATE_STATE && Array.isArray(window.PRIVATE_STATE.entries))
+        return normalize(window.PRIVATE_STATE);
+    } catch (e) {}
     return normalize(clone(SEED));
   }
   function save() {

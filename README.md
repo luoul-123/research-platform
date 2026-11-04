@@ -4,6 +4,10 @@
 
 仓库中**不包含任何个人文献、研究心得、待办或个人信息**：初次打开时文献清单为空，所有数据只保存在你自己的浏览器里。
 
+![Research Platform 界面预览](screenshot.png)
+
+> 截图为示例数据；仓库默认文献为空。
+
 ## 功能
 
 ### 1. 文献阅读清单
@@ -56,6 +60,9 @@
 .
 ├── index.html                # 主页面（科研工作台）
 ├── notebook.html             # 单篇文献的独立笔记小窗
+├── screenshot.png            # README 界面截图（示例数据）
+├── tools/
+│   └── make-private-state.js # 把导出 JSON 转成 assets/private/state.js
 ├── assets/
 │   ├── app.js                # 主页面逻辑（文献 / 心得 / 待办 / 书签）
 │   ├── style.css             # 主页面样式
@@ -63,7 +70,8 @@
 │   ├── notebook.css          # 笔记小窗样式
 │   ├── data.js               # 初始数据（默认空）
 │   └── private/
-│       └── data.js           # 本地私人数据（gitignore，可选）
+│       ├── data.js           # 本地文献 seed（gitignore，可选）
+│       └── state.js          # 本地完整状态（gitignore，可选）
 └── README.md
 ```
 
@@ -74,6 +82,23 @@
 - 若要在本机使用自己的数据：把私人数据文件放到 `assets/private/data.js`（该目录已被 `.gitignore` 忽略）。`index.html` 在 `file://` 或 `localhost` 下会自动加载它；公开部署时不会请求该文件；
 - 换电脑或清理浏览器前，请用「导出」备份 JSON，再到新环境「导入」；
 - 不同浏览器 / 不同文件路径的 localStorage 可能不共享，建议固定使用同一个浏览器与目录。
+
+### 私人状态文件（心得 / 待办 / 书签）
+
+`assets/private/data.js` 只包含**文献 seed**。心得、待办、书签默认存在浏览器 localStorage 中，不在 `data.js` 里。
+
+如果想把它们也保存成文件：
+
+1. 打开 `index.html`，点右上角「导出」下载 JSON；
+2. 在项目根目录运行：
+
+   ```bash
+   node tools/make-private-state.js "C:\path\to\research_workbench_YYYY-MM-DD.json"
+   ```
+
+3. 会生成 `assets/private/state.js`（已被 `.gitignore` 忽略），包含 `entries / memos / todos / bookmarks`。
+
+`index.html` 只在 localStorage 为空时用 `state.js` 兜底；如果浏览器里已有数据，仍以 localStorage 为准。要强制从文件恢复，可用页面「导入」该 JSON，或清除该页面的本地存储后刷新。
 
 ## 自定义
 

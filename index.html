@@ -279,6 +279,7 @@
         location.protocol === "file:" ||
         /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
       ) {
+        document.write('<script src="assets/private/state.js"><\/script>');
         document.write('<script src="assets/private/data.js"><\/script>');
       }
     </script>
