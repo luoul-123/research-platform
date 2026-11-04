@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  var KEY = "reading_tracker_v1";
+  var KEY = "research_platform_v1";
   var SEED = window.SEED || { entries: [], groups: [], metaTasks: [] };
   var $ = function (s, r) {
     return (r || document).querySelector(s);
