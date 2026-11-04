@@ -272,6 +272,16 @@
     <input type="file" id="file" accept=".json,application/json" hidden />
     <div class="toast" id="toast"></div>
 
+    <script>
+      // 本地私人数据：只在 file:// 或 localhost 下加载。
+      // 公开部署（GitHub Pages）不会请求这个文件。
+      if (
+        location.protocol === "file:" ||
+        /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+      ) {
+        document.write('<script src="assets/private/data.js"><\/script>');
+      }
+    </script>
     <script src="assets/data.js"></script>
     <script src="assets/app.js"></script>
   </body>

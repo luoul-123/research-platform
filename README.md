@@ -61,7 +61,9 @@
 │   ├── style.css             # 主页面样式
 │   ├── notebook.js           # 笔记小窗逻辑
 │   ├── notebook.css          # 笔记小窗样式
-│   └── data.js               # 初始数据（默认空）
+│   ├── data.js               # 初始数据（默认空）
+│   └── private/
+│       └── data.js           # 本地私人数据（gitignore，可选）
 └── README.md
 ```
 
@@ -69,6 +71,7 @@
 
 - 所有文献、心得、待办、书签都保存在**本机浏览器 localStorage**；
 - 仓库里的 `assets/data.js` 是空数据种子，不包含任何个人内容；
+- 若要在本机使用自己的数据：把私人数据文件放到 `assets/private/data.js`（该目录已被 `.gitignore` 忽略）。`index.html` 在 `file://` 或 `localhost` 下会自动加载它；公开部署时不会请求该文件；
 - 换电脑或清理浏览器前，请用「导出」备份 JSON，再到新环境「导入」；
 - 不同浏览器 / 不同文件路径的 localStorage 可能不共享，建议固定使用同一个浏览器与目录。
 

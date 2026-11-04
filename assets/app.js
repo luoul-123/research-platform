@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  var KEY = "research_platform_v1";
-  var THEME_KEY = "research_platform_theme_v1";
-  var TAB_KEY = "research_platform_tab_v1";
+  var KEY = "reading_tracker_v1";
+  var THEME_KEY = "research_workbench_theme_v1";
+  var TAB_KEY = "research_workbench_tab_v1";
   var SEED = window.SEED || { entries: [] };
 
   var $ = function (s, r) {

@@ -1,1 +1,1 @@
-﻿window.SEED = { entries: [] };
+window.SEED = window.SEED || { entries: [] };
