@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research Platform</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body data-tab="lit">
+    <header class="hero">
+      <div class="wrap">
+        <div class="hero-top">
+          <div>
+            <div class="kicker">Research Workbench</div>
+            <h1>Research Platform</h1>
+            <p class="sub">
+              A local-first research workbench for literature, notes and tasks.
+            </p>
+          </div>
+          <div class="hero-actions">
+            <button
+              class="btn icon"
+              id="theme"
+              type="button"
+              title="切换深色/浅色"
+            >
+              🌙
+            </button>
+            <button class="btn" id="export" type="button">导出</button>
+            <button class="btn" id="import" type="button">导入</button>
+            <button
+              class="btn icon"
+              id="print"
+              type="button"
+              title="打印当前模块"
+            >
+              🖨
+            </button>
+          </div>
+        </div>
+
+        <div class="bookmarks-row" id="bookmarks"></div>
+
+        <nav class="tabs" id="tabs">
+          <button class="tab active" type="button" data-tab="lit">
+            文献阅读清单 <span class="tab-count" id="tab-lit-count">0</span>
+          </button>
+          <button class="tab" type="button" data-tab="memo">
+            研究心得 <span class="tab-count" id="tab-memo-count">0</span>
+          </button>
+          <button class="tab" type="button" data-tab="todo">
+            待办 <span class="tab-count" id="tab-todo-count">0</span>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section class="module" id="module-lit">
+        <div class="module-progress">
+          <div class="progress"><div id="progress-bar"></div></div>
+          <div class="progress-text" id="progress-text">阅读进度 0%</div>
+        </div>
+        <div class="module-toolbar">
+          <div class="search">
+            <span class="ico">🔍</span>
+            <input
+              id="search"
+              type="search"
+              placeholder="搜索标题 / 年份 / 笔记…"
+            />
+          </div>
+          <select id="status" title="阅读状态">
+            <option value="all">全部状态</option>
+            <option value="unread">未读</option>
+            <option value="read">已读</option>
+            <option value="notes">有笔记</option>
+          </select>
+          <select id="priority" title="优先级">
+            <option value="all">全部优先级</option>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★</option>
+            <option value="3">★★★</option>
+            <option value="2">★★</option>
+            <option value="1">★</option>
+          </select>
+          <select id="sort" title="排序">
+            <option value="default">默认顺序</option>
+            <option value="priority">按优先级</option>
+            <option value="year">按年份</option>
+            <option value="title">按标题</option>
+          </select>
+          <button class="btn primary" id="add" type="button">
+            ＋ 添加文献
+          </button>
+          <button class="btn" id="add-section" type="button">
+            ＋ 新建分区
+          </button>
+          <button class="btn" id="expand" type="button">全部展开</button>
+          <button class="btn" id="collapse" type="button">全部收起</button>
+        </div>
+        <div id="sections"></div>
+      </section>
+
+      <section class="module hidden" id="module-memo">
+        <div class="module-toolbar">
+          <div class="search">
+            <span class="ico">🔍</span>
+            <input
+              id="memo-search"
+              type="search"
+              placeholder="搜索心得标题 / 正文 / 标签…"
+            />
+          </div>
+          <select id="memo-filter" title="筛选心得">
+            <option value="all">全部心得</option>
+            <option value="pinned">仅看置顶</option>
+          </select>
+          <select id="memo-sort" title="心得排序">
+            <option value="updated">按更新时间</option>
+            <option value="created">按创建时间</option>
+            <option value="title">按标题</option>
+          </select>
+          <button class="btn primary" id="add-memo" type="button">
+            ＋ 新建心得
+          </button>
+        </div>
+        <div class="memo-workspace">
+          <aside class="memo-sidebar">
+            <div class="memo-sidebar-head">
+              <span>心得列表</span>
+              <span id="memo-sidebar-count">0</span>
+            </div>
+            <div class="memo-list" id="memo-list"></div>
+          </aside>
+          <div class="memo-editor" id="memo-editor"></div>
+        </div>
+      </section>
+
+      <section class="module hidden" id="module-todo">
+        <div class="module-toolbar">
+          <input
+            class="todo-new"
+            id="new-todo"
+            type="text"
+            placeholder="添加待办，回车即可…"
+          />
+          <select id="new-todo-priority" title="新增待办优先级">
+            <option value="medium">中优先级</option>
+            <option value="high">高优先级</option>
+            <option value="low">低优先级</option>
+          </select>
+          <button class="btn primary" id="add-todo" type="button">
+            ＋ 添加
+          </button>
+        </div>
+        <div class="module-toolbar sub-toolbar">
+          <div class="search">
+            <span class="ico">🔍</span>
+            <input
+              id="todo-search"
+              type="search"
+              placeholder="搜索待办 / 标签 / 备注…"
+            />
+          </div>
+          <select id="todo-filter" title="筛选待办">
+            <option value="all">全部</option>
+            <option value="active">未完成</option>
+            <option value="done">已完成</option>
+          </select>
+          <select id="todo-sort" title="待办排序">
+            <option value="priority">按优先级</option>
+            <option value="due">按截止日期</option>
+            <option value="created">按创建时间</option>
+          </select>
+          <button class="btn" id="clear-done" type="button">清除已完成</button>
+          <span class="todo-summary" id="todo-summary"></span>
+        </div>
+        <div id="todo-list" class="todo-list"></div>
+      </section>
+    </main>
+
+    <div class="modal hidden" id="entry-modal">
+      <div class="dialog">
+        <h2 id="entry-modal-title">添加文献</h2>
+        <div class="form-grid">
+          <label class="field full"
+            >标题
+            <input
+              id="f-title"
+              placeholder="如：MapMate — 自然语言驱动的地图设计"
+          /></label>
+          <label class="field"
+            >年份 <input id="f-year" placeholder="2026"
+          /></label>
+          <label class="field"
+            >分区
+            <select id="f-section"></select>
+          </label>
+          <label class="field full"
+            >链接 <input id="f-link" placeholder="https://doi.org/..."
+          /></label>
+          <div class="field full">
+            <span>优先级</span>
+            <div class="star-pick" id="f-stars" role="radiogroup">
+              <button type="button" data-star="1" title="1 星">★</button>
+              <button type="button" data-star="2" title="2 星">★</button>
+              <button type="button" data-star="3" title="3 星">★</button>
+              <button type="button" data-star="4" title="4 星">★</button>
+              <button type="button" data-star="5" title="5 星">★</button>
+            </div>
+            <input type="hidden" id="f-priority" value="3" />
+          </div>
+          <label class="field full"
+            >关注点 / 读什么
+            <textarea
+              id="f-readwhat"
+              placeholder="读这篇时重点看什么？"
+            ></textarea>
+          </label>
+          <label class="field full"
+            >笔记
+            <textarea
+              id="f-notes"
+              placeholder="也可以之后在独立笔记小窗里写长笔记"
+            ></textarea>
+          </label>
+        </div>
+        <div class="dialog-actions">
+          <button class="btn" id="entry-cancel" type="button">取消</button>
+          <button class="btn primary" id="entry-save" type="button">
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="section-modal">
+      <div class="dialog" style="max-width: 460px">
+        <h2 id="section-modal-title">新建分区</h2>
+        <label class="field"
+          >分区名称
+          <input id="f-section-name" placeholder="如：综述 / 方法 / 数据集"
+        /></label>
+        <div class="dialog-actions">
+          <button class="btn" id="section-cancel" type="button">取消</button>
+          <button class="btn primary" id="section-save" type="button">
+            保存
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="bookmark-modal">
+      <div class="dialog" style="max-width: 480px">
+        <h2 id="bookmark-modal-title">添加固定网址</h2>
+        <label class="field"
+          >名称
+          <input id="bm-title" placeholder="如：Google Scholar / arXiv"
+        /></label>
+        <label class="field"
+          >网址
+          <input id="bm-url" placeholder="https://..." />
+        </label>
+        <div class="dialog-actions">
+          <button class="btn" id="bm-cancel" type="button">取消</button>
+          <button class="btn primary" id="bm-save" type="button">保存</button>
+        </div>
+      </div>
+    </div>
+
+    <input type="file" id="file" accept=".json,application/json" hidden />
+    <div class="toast" id="toast"></div>
+
+    <script src="assets/data.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>阅读笔记</title>
+    <link rel="stylesheet" href="assets/notebook.css" />
+  </head>
+  <body>
+    <header class="nb-head">
+      <div class="nb-kicker">READING NOTE</div>
+      <div class="nb-title-row">
+        <span class="nb-id" id="nb-id">—</span>
+        <h1 id="nb-title">加载中…</h1>
+      </div>
+      <div class="nb-actions">
+        <button class="btn primary" id="nb-open" type="button">打开原文 ↗</button>
+        <button class="btn" id="nb-list" type="button">打开清单</button>
+        <button class="btn" id="nb-copy" type="button">复制链接</button>
+        <button class="btn" id="nb-close" type="button">关闭</button>
+      </div>
+      <div class="nb-hint">
+        提示：把本窗口拖到原文旁边，或按 Win + ← / → 贴屏。
+      </div>
+    </header>
+    <main class="nb-main">
+      <textarea
+        id="nb-notes"
+        placeholder="在这里写长笔记…&#10;&#10;建议结构：&#10;1. 它做了什么&#10;2. 它没做什么（gap）&#10;3. 可引用点 / 页码&#10;4. 与我选题的关系"
+      ></textarea>
+    </main>
+    <footer class="nb-foot">
+      <span id="nb-count">0 字</span>
+      <span id="nb-status">自动保存到本机浏览器</span>
+    </footer>
+    <script src="assets/data.js"></script>
+    <script src="assets/notebook.js"></script>
+  </body>
+</html>
