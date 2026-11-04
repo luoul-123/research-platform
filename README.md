@@ -52,6 +52,15 @@
 
 不需要 `npm install`，也不需要启动本地服务器。
 
+### 公开模式 / 私人模式
+
+| 模式 | 打开方式 | 数据 |
+| --- | --- | --- |
+| 公开模式（默认） | 直接打开 `index.html`，或访问 GitHub Pages | 空数据；存储键 `research_platform_v1`；不加载 `assets/private/` |
+| 私人模式（仅本机） | 在 `file://` 或 `localhost` 下打开 `index.html?private=1` | 加载 `assets/private/`；存储键 `reading_tracker_v1` |
+
+私人模式只在本地生效；在 GitHub Pages 上即使带 `?private=1` 也不会加载私人文件。
+
 > 注意：`index.html`、`notebook.html` 和 `assets/` 必须保持在同一目录，移动时请一起移动。
 
 ## 目录结构
@@ -77,10 +86,11 @@
 
 ## 数据与隐私
 
-- 所有文献、心得、待办、书签都保存在**本机浏览器 localStorage**；
+- 所有文献、心得、待办、书签都保存在**本机浏览器 localStorage**，不上传服务器；
+- 公开默认模式使用空数据 + 独立存储键 `research_platform_v1`，**不会读取**你的私人数据；
 - 仓库里的 `assets/data.js` 是空数据种子，不包含任何个人内容；
-- 若要在本机使用自己的数据：把私人数据文件放到 `assets/private/data.js`（该目录已被 `.gitignore` 忽略）。`index.html` 在 `file://` 或 `localhost` 下会自动加载它；公开部署时不会请求该文件；
-- 换电脑或清理浏览器前，请用「导出」备份 JSON，再到新环境「导入」；
+- 私人模式只在本机 `index.html?private=1` 下启用，使用旧存储键 `reading_tracker_v1` 和 `assets/private/` 下的文件；这些文件已被 `.gitignore` 忽略，不会被提交；
+- 换电脑或清理浏览器前，请用私人模式的「导出」备份 JSON，再到新环境「导入」；
 - 不同浏览器 / 不同文件路径的 localStorage 可能不共享，建议固定使用同一个浏览器与目录。
 
 ### 私人状态文件（心得 / 待办 / 书签）
@@ -89,7 +99,7 @@
 
 如果想把它们也保存成文件：
 
-1. 打开 `index.html`，点右上角「导出」下载 JSON；
+1. 在本机用 `index.html?private=1` 打开私人模式，点右上角「导出」下载 JSON；
 2. 在项目根目录运行：
 
    ```bash
@@ -98,11 +108,11 @@
 
 3. 会生成 `assets/private/state.js`（已被 `.gitignore` 忽略），包含 `entries / memos / todos / bookmarks`。
 
-`index.html` 只在 localStorage 为空时用 `state.js` 兜底；如果浏览器里已有数据，仍以 localStorage 为准。要强制从文件恢复，可用页面「导入」该 JSON，或清除该页面的本地存储后刷新。
+私人模式只在 localStorage 为空时用 `state.js` 兜底；如果浏览器里已有数据，仍以 localStorage 为准。要强制从文件恢复，可用页面「导入」该 JSON，或清除该页面的本地存储后刷新。
 
 ## 自定义
 
-- 想预置文献：编辑 `assets/data.js`，按 `entries` 数组格式添加；
+- 想预置文献：公开模式编辑 `assets/data.js`；私人模式编辑 `assets/private/data.js`；
 - 想改配色：编辑 `assets/style.css` 顶部的 CSS 变量；
 - 想改标题：编辑 `index.html` 中的 `<title>` 与 `<h1>`。
 

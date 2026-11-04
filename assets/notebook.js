@@ -1,11 +1,13 @@
 (function () {
   "use strict";
-  var KEY = "reading_tracker_v1";
+  var params = new URLSearchParams(location.search);
+  var PRIVATE_MODE = params.get("mode") === "private";
+  var KEY = PRIVATE_MODE ? "reading_tracker_v1" : "research_platform_v1";
   var SEED = window.SEED || { entries: [], groups: [], metaTasks: [] };
+  var backUrl = PRIVATE_MODE ? "index.html?private=1" : "index.html";
   var $ = function (s, r) {
     return (r || document).querySelector(s);
   };
-  var params = new URLSearchParams(location.search);
   var id = params.get("id") || "";
   var entry = null;
   var timer = null;
@@ -76,7 +78,7 @@
       var go = $("#nb-go");
       if (go)
         go.onclick = function () {
-          window.open("index.html", "_blank");
+          window.open(backUrl, "_blank");
         };
       return;
     }
@@ -119,7 +121,7 @@
     window.close();
   });
   $("#nb-list").addEventListener("click", function () {
-    window.open("index.html", "_blank");
+    window.open(backUrl, "_blank");
   });
   $("#nb-copy").addEventListener("click", function () {
     if (!entry || !entry.link) {

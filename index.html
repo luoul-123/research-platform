@@ -273,12 +273,13 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      // 本地私人数据：只在 file:// 或 localhost 下加载。
-      // 公开部署（GitHub Pages）不会请求这个文件。
-      if (
-        location.protocol === "file:" ||
-        /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
-      ) {
+      // 公开默认模式：干净数据，不加载 private 文件。
+      // 私人模式：仅在本机 file:// 或 localhost 下访问 index.html?private=1 时启用。
+      window.PRIVATE_MODE =
+        new URLSearchParams(location.search).get("private") === "1" &&
+        (location.protocol === "file:" ||
+          /^(localhost|127\.0\.0\.1)$/.test(location.hostname));
+      if (window.PRIVATE_MODE) {
         document.write('<script src="assets/private/state.js"><\/script>');
         document.write('<script src="assets/private/data.js"><\/script>');
       }
